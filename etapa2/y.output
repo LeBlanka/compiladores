@@ -1,0 +1,2014 @@
+Terminais sem uso na gramática
+
+   KW_FOR
+   TOKEN_ERROR
+
+
+Estado 126 conflitos: 1 de deslocamento/redução
+
+
+Gramática
+
+    0 $accept: Declaracao_global $end
+
+    1 Declaracao_global: Declaracao_local
+    2                  | Declaracao_global Declaracao_local
+
+    3 Declaracao_local: Variavel_Global ';'
+    4                 | Funcao
+
+    5 Variavel_Global: Variavel
+    6                | Vetor
+
+    7 Variavel: TK_IDENTIFIER ':' Tipo '=' Literal
+
+    8 Tipo: KW_BYTE
+    9     | KW_SHORT
+   10     | KW_LONG
+   11     | KW_FLOAT
+   12     | KW_DOUBLE
+
+   13 Literal: LIT_INTEGER
+   14        | LIT_CHAR
+   15        | LIT_REAL
+
+   16 Vetor: TK_IDENTIFIER ':' Tipo '[' LIT_INTEGER ']'
+   17      | TK_IDENTIFIER ':' Tipo '[' LIT_INTEGER ']' Lista_Literais
+
+   18 Lista_Literais: Literal
+   19               | Literal Lista_Literais
+
+   20 Funcao: '(' Tipo ')' TK_IDENTIFIER '(' ')' Bloco_Comandos
+   21       | '(' Tipo ')' TK_IDENTIFIER '(' Lista_Parametros ')' Bloco_Comandos
+
+   22 Bloco_Comandos: '{' Lista_Comandos '}'
+
+   23 Lista_Comandos: Comando
+   24               | Comando ';' Lista_Comandos
+
+   25 Comando: Atribuicao
+   26        | Controle_Fluxo
+   27        | Read
+   28        | Print
+   29        | Return
+   30        | Bloco_Comandos
+   31        | %empty
+
+   32 Atribuicao: TK_IDENTIFIER '=' Expressao
+   33           | TK_IDENTIFIER '[' Expressao ']' '=' Expressao
+
+   34 Expressao: TK_IDENTIFIER
+   35          | TK_IDENTIFIER '[' Expressao ']'
+   36          | Literal
+   37          | '(' Expressao ')'
+   38          | Expressao '<' Expressao
+   39          | Expressao '>' Expressao
+   40          | Expressao '!' Expressao
+   41          | Expressao '-' Expressao
+   42          | Expressao '+' Expressao
+   43          | Expressao '*' Expressao
+   44          | Expressao '/' Expressao
+   45          | Expressao OPERATOR_LE Expressao
+   46          | Expressao OPERATOR_GE Expressao
+   47          | Expressao OPERATOR_EQ Expressao
+   48          | Expressao OPERATOR_NE Expressao
+   49          | Expressao OPERATOR_AND Expressao
+   50          | Expressao OPERATOR_OR Expressao
+   51          | TK_IDENTIFIER '(' ')'
+   52          | TK_IDENTIFIER '(' Lista_Expressoes ')'
+
+   53 Lista_Expressoes: Expressao
+   54                 | Expressao ',' Lista_Expressoes
+
+   55 Controle_Fluxo: KW_IF '(' Expressao ')' KW_THEN Comando
+   56               | KW_IF '(' Expressao ')' KW_THEN Comando KW_ELSE Comando
+   57               | KW_WHILE '(' Expressao ')' Comando
+
+   58 Read: KW_READ '>' TK_IDENTIFIER
+
+   59 Print: KW_PRINT Lista_Elementos
+
+   60 Lista_Elementos: Elemento
+   61                | Elemento ',' Lista_Elementos
+
+   62 Elemento: LIT_STRING
+   63         | Expressao
+
+   64 Return: KW_RETURN Expressao
+
+   65 Lista_Parametros: Parametro
+   66                 | Parametro ',' Lista_Parametros
+
+   67 Parametro: TK_IDENTIFIER ':' Tipo
+
+
+Terminais, com as regras onde eles aparecem
+
+$end (0) 0
+'!' (33) 40
+'(' (40) 20 21 37 51 52 55 56 57
+')' (41) 20 21 37 51 52 55 56 57
+'*' (42) 43
+'+' (43) 42
+',' (44) 54 61 66
+'-' (45) 41
+'/' (47) 44
+':' (58) 7 16 17 67
+';' (59) 3 24
+'<' (60) 38
+'=' (61) 7 32 33
+'>' (62) 39 58
+'[' (91) 16 17 33 35
+']' (93) 16 17 33 35
+'{' (123) 22
+'}' (125) 22
+error (256)
+KW_BYTE (258) 8
+KW_SHORT (259) 9
+KW_LONG (260) 10
+KW_FLOAT (261) 11
+KW_DOUBLE (262) 12
+KW_IF (263) 55 56
+KW_THEN (264) 55 56
+KW_ELSE (265) 56
+KW_WHILE (266) 57
+KW_FOR (267)
+KW_READ (268) 58
+KW_PRINT (269) 59
+KW_RETURN (270) 64
+OPERATOR_LE (271) 45
+OPERATOR_GE (272) 46
+OPERATOR_EQ (273) 47
+OPERATOR_NE (274) 48
+OPERATOR_AND (275) 49
+OPERATOR_OR (276) 50
+TK_IDENTIFIER (277) 7 16 17 20 21 32 33 34 35 51 52 58 67
+LIT_INTEGER (278) 13 16 17
+LIT_CHAR (279) 14
+LIT_STRING (280) 62
+LIT_REAL (281) 15
+TOKEN_ERROR (282)
+
+
+Não terminais com as regras onde eles aparecem
+
+$accept (45)
+    à esquerda: 0
+Declaracao_global (46)
+    à esquerda: 1 2, à direita: 0 2
+Declaracao_local (47)
+    à esquerda: 3 4, à direita: 1 2
+Variavel_Global (48)
+    à esquerda: 5 6, à direita: 3
+Variavel (49)
+    à esquerda: 7, à direita: 5
+Tipo (50)
+    à esquerda: 8 9 10 11 12, à direita: 7 16 17 20 21 67
+Literal (51)
+    à esquerda: 13 14 15, à direita: 7 18 19 36
+Vetor (52)
+    à esquerda: 16 17, à direita: 6
+Lista_Literais (53)
+    à esquerda: 18 19, à direita: 17 19
+Funcao (54)
+    à esquerda: 20 21, à direita: 4
+Bloco_Comandos (55)
+    à esquerda: 22, à direita: 20 21 30
+Lista_Comandos (56)
+    à esquerda: 23 24, à direita: 22 24
+Comando (57)
+    à esquerda: 25 26 27 28 29 30 31, à direita: 23 24 55 56 57
+Atribuicao (58)
+    à esquerda: 32 33, à direita: 25
+Expressao (59)
+    à esquerda: 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50
+    51 52, à direita: 32 33 35 37 38 39 40 41 42 43 44 45 46 47 48
+    49 50 53 54 55 56 57 63 64
+Lista_Expressoes (60)
+    à esquerda: 53 54, à direita: 52 54
+Controle_Fluxo (61)
+    à esquerda: 55 56 57, à direita: 26
+Read (62)
+    à esquerda: 58, à direita: 27
+Print (63)
+    à esquerda: 59, à direita: 28
+Lista_Elementos (64)
+    à esquerda: 60 61, à direita: 59 61
+Elemento (65)
+    à esquerda: 62 63, à direita: 60 61
+Return (66)
+    à esquerda: 64, à direita: 29
+Lista_Parametros (67)
+    à esquerda: 65 66, à direita: 21 66
+Parametro (68)
+    à esquerda: 67, à direita: 65 66
+
+
+Estado 0
+
+    0 $accept: . Declaracao_global $end
+
+    TK_IDENTIFIER  deslocar, e ir ao estado 1
+    '('            deslocar, e ir ao estado 2
+
+    Declaracao_global  ir ao estado 3
+    Declaracao_local   ir ao estado 4
+    Variavel_Global    ir ao estado 5
+    Variavel           ir ao estado 6
+    Vetor              ir ao estado 7
+    Funcao             ir ao estado 8
+
+
+Estado 1
+
+    7 Variavel: TK_IDENTIFIER . ':' Tipo '=' Literal
+   16 Vetor: TK_IDENTIFIER . ':' Tipo '[' LIT_INTEGER ']'
+   17      | TK_IDENTIFIER . ':' Tipo '[' LIT_INTEGER ']' Lista_Literais
+
+    ':'  deslocar, e ir ao estado 9
+
+
+Estado 2
+
+   20 Funcao: '(' . Tipo ')' TK_IDENTIFIER '(' ')' Bloco_Comandos
+   21       | '(' . Tipo ')' TK_IDENTIFIER '(' Lista_Parametros ')' Bloco_Comandos
+
+    KW_BYTE    deslocar, e ir ao estado 10
+    KW_SHORT   deslocar, e ir ao estado 11
+    KW_LONG    deslocar, e ir ao estado 12
+    KW_FLOAT   deslocar, e ir ao estado 13
+    KW_DOUBLE  deslocar, e ir ao estado 14
+
+    Tipo  ir ao estado 15
+
+
+Estado 3
+
+    0 $accept: Declaracao_global . $end
+    2 Declaracao_global: Declaracao_global . Declaracao_local
+
+    $end           deslocar, e ir ao estado 16
+    TK_IDENTIFIER  deslocar, e ir ao estado 1
+    '('            deslocar, e ir ao estado 2
+
+    Declaracao_local  ir ao estado 17
+    Variavel_Global   ir ao estado 5
+    Variavel          ir ao estado 6
+    Vetor             ir ao estado 7
+    Funcao            ir ao estado 8
+
+
+Estado 4
+
+    1 Declaracao_global: Declaracao_local .
+
+    $padrão  reduzir usando a regra 1 (Declaracao_global)
+
+
+Estado 5
+
+    3 Declaracao_local: Variavel_Global . ';'
+
+    ';'  deslocar, e ir ao estado 18
+
+
+Estado 6
+
+    5 Variavel_Global: Variavel .
+
+    $padrão  reduzir usando a regra 5 (Variavel_Global)
+
+
+Estado 7
+
+    6 Variavel_Global: Vetor .
+
+    $padrão  reduzir usando a regra 6 (Variavel_Global)
+
+
+Estado 8
+
+    4 Declaracao_local: Funcao .
+
+    $padrão  reduzir usando a regra 4 (Declaracao_local)
+
+
+Estado 9
+
+    7 Variavel: TK_IDENTIFIER ':' . Tipo '=' Literal
+   16 Vetor: TK_IDENTIFIER ':' . Tipo '[' LIT_INTEGER ']'
+   17      | TK_IDENTIFIER ':' . Tipo '[' LIT_INTEGER ']' Lista_Literais
+
+    KW_BYTE    deslocar, e ir ao estado 10
+    KW_SHORT   deslocar, e ir ao estado 11
+    KW_LONG    deslocar, e ir ao estado 12
+    KW_FLOAT   deslocar, e ir ao estado 13
+    KW_DOUBLE  deslocar, e ir ao estado 14
+
+    Tipo  ir ao estado 19
+
+
+Estado 10
+
+    8 Tipo: KW_BYTE .
+
+    $padrão  reduzir usando a regra 8 (Tipo)
+
+
+Estado 11
+
+    9 Tipo: KW_SHORT .
+
+    $padrão  reduzir usando a regra 9 (Tipo)
+
+
+Estado 12
+
+   10 Tipo: KW_LONG .
+
+    $padrão  reduzir usando a regra 10 (Tipo)
+
+
+Estado 13
+
+   11 Tipo: KW_FLOAT .
+
+    $padrão  reduzir usando a regra 11 (Tipo)
+
+
+Estado 14
+
+   12 Tipo: KW_DOUBLE .
+
+    $padrão  reduzir usando a regra 12 (Tipo)
+
+
+Estado 15
+
+   20 Funcao: '(' Tipo . ')' TK_IDENTIFIER '(' ')' Bloco_Comandos
+   21       | '(' Tipo . ')' TK_IDENTIFIER '(' Lista_Parametros ')' Bloco_Comandos
+
+    ')'  deslocar, e ir ao estado 20
+
+
+Estado 16
+
+    0 $accept: Declaracao_global $end .
+
+    $padrão  aceitar
+
+
+Estado 17
+
+    2 Declaracao_global: Declaracao_global Declaracao_local .
+
+    $padrão  reduzir usando a regra 2 (Declaracao_global)
+
+
+Estado 18
+
+    3 Declaracao_local: Variavel_Global ';' .
+
+    $padrão  reduzir usando a regra 3 (Declaracao_local)
+
+
+Estado 19
+
+    7 Variavel: TK_IDENTIFIER ':' Tipo . '=' Literal
+   16 Vetor: TK_IDENTIFIER ':' Tipo . '[' LIT_INTEGER ']'
+   17      | TK_IDENTIFIER ':' Tipo . '[' LIT_INTEGER ']' Lista_Literais
+
+    '='  deslocar, e ir ao estado 21
+    '['  deslocar, e ir ao estado 22
+
+
+Estado 20
+
+   20 Funcao: '(' Tipo ')' . TK_IDENTIFIER '(' ')' Bloco_Comandos
+   21       | '(' Tipo ')' . TK_IDENTIFIER '(' Lista_Parametros ')' Bloco_Comandos
+
+    TK_IDENTIFIER  deslocar, e ir ao estado 23
+
+
+Estado 21
+
+    7 Variavel: TK_IDENTIFIER ':' Tipo '=' . Literal
+
+    LIT_INTEGER  deslocar, e ir ao estado 24
+    LIT_CHAR     deslocar, e ir ao estado 25
+    LIT_REAL     deslocar, e ir ao estado 26
+
+    Literal  ir ao estado 27
+
+
+Estado 22
+
+   16 Vetor: TK_IDENTIFIER ':' Tipo '[' . LIT_INTEGER ']'
+   17      | TK_IDENTIFIER ':' Tipo '[' . LIT_INTEGER ']' Lista_Literais
+
+    LIT_INTEGER  deslocar, e ir ao estado 28
+
+
+Estado 23
+
+   20 Funcao: '(' Tipo ')' TK_IDENTIFIER . '(' ')' Bloco_Comandos
+   21       | '(' Tipo ')' TK_IDENTIFIER . '(' Lista_Parametros ')' Bloco_Comandos
+
+    '('  deslocar, e ir ao estado 29
+
+
+Estado 24
+
+   13 Literal: LIT_INTEGER .
+
+    $padrão  reduzir usando a regra 13 (Literal)
+
+
+Estado 25
+
+   14 Literal: LIT_CHAR .
+
+    $padrão  reduzir usando a regra 14 (Literal)
+
+
+Estado 26
+
+   15 Literal: LIT_REAL .
+
+    $padrão  reduzir usando a regra 15 (Literal)
+
+
+Estado 27
+
+    7 Variavel: TK_IDENTIFIER ':' Tipo '=' Literal .
+
+    $padrão  reduzir usando a regra 7 (Variavel)
+
+
+Estado 28
+
+   16 Vetor: TK_IDENTIFIER ':' Tipo '[' LIT_INTEGER . ']'
+   17      | TK_IDENTIFIER ':' Tipo '[' LIT_INTEGER . ']' Lista_Literais
+
+    ']'  deslocar, e ir ao estado 30
+
+
+Estado 29
+
+   20 Funcao: '(' Tipo ')' TK_IDENTIFIER '(' . ')' Bloco_Comandos
+   21       | '(' Tipo ')' TK_IDENTIFIER '(' . Lista_Parametros ')' Bloco_Comandos
+
+    TK_IDENTIFIER  deslocar, e ir ao estado 31
+    ')'            deslocar, e ir ao estado 32
+
+    Lista_Parametros  ir ao estado 33
+    Parametro         ir ao estado 34
+
+
+Estado 30
+
+   16 Vetor: TK_IDENTIFIER ':' Tipo '[' LIT_INTEGER ']' .
+   17      | TK_IDENTIFIER ':' Tipo '[' LIT_INTEGER ']' . Lista_Literais
+
+    LIT_INTEGER  deslocar, e ir ao estado 24
+    LIT_CHAR     deslocar, e ir ao estado 25
+    LIT_REAL     deslocar, e ir ao estado 26
+
+    $padrão  reduzir usando a regra 16 (Vetor)
+
+    Literal         ir ao estado 35
+    Lista_Literais  ir ao estado 36
+
+
+Estado 31
+
+   67 Parametro: TK_IDENTIFIER . ':' Tipo
+
+    ':'  deslocar, e ir ao estado 37
+
+
+Estado 32
+
+   20 Funcao: '(' Tipo ')' TK_IDENTIFIER '(' ')' . Bloco_Comandos
+
+    '{'  deslocar, e ir ao estado 38
+
+    Bloco_Comandos  ir ao estado 39
+
+
+Estado 33
+
+   21 Funcao: '(' Tipo ')' TK_IDENTIFIER '(' Lista_Parametros . ')' Bloco_Comandos
+
+    ')'  deslocar, e ir ao estado 40
+
+
+Estado 34
+
+   65 Lista_Parametros: Parametro .
+   66                 | Parametro . ',' Lista_Parametros
+
+    ','  deslocar, e ir ao estado 41
+
+    $padrão  reduzir usando a regra 65 (Lista_Parametros)
+
+
+Estado 35
+
+   18 Lista_Literais: Literal .
+   19               | Literal . Lista_Literais
+
+    LIT_INTEGER  deslocar, e ir ao estado 24
+    LIT_CHAR     deslocar, e ir ao estado 25
+    LIT_REAL     deslocar, e ir ao estado 26
+
+    $padrão  reduzir usando a regra 18 (Lista_Literais)
+
+    Literal         ir ao estado 35
+    Lista_Literais  ir ao estado 42
+
+
+Estado 36
+
+   17 Vetor: TK_IDENTIFIER ':' Tipo '[' LIT_INTEGER ']' Lista_Literais .
+
+    $padrão  reduzir usando a regra 17 (Vetor)
+
+
+Estado 37
+
+   67 Parametro: TK_IDENTIFIER ':' . Tipo
+
+    KW_BYTE    deslocar, e ir ao estado 10
+    KW_SHORT   deslocar, e ir ao estado 11
+    KW_LONG    deslocar, e ir ao estado 12
+    KW_FLOAT   deslocar, e ir ao estado 13
+    KW_DOUBLE  deslocar, e ir ao estado 14
+
+    Tipo  ir ao estado 43
+
+
+Estado 38
+
+   22 Bloco_Comandos: '{' . Lista_Comandos '}'
+
+    KW_IF          deslocar, e ir ao estado 44
+    KW_WHILE       deslocar, e ir ao estado 45
+    KW_READ        deslocar, e ir ao estado 46
+    KW_PRINT       deslocar, e ir ao estado 47
+    KW_RETURN      deslocar, e ir ao estado 48
+    TK_IDENTIFIER  deslocar, e ir ao estado 49
+    '{'            deslocar, e ir ao estado 38
+
+    $padrão  reduzir usando a regra 31 (Comando)
+
+    Bloco_Comandos  ir ao estado 50
+    Lista_Comandos  ir ao estado 51
+    Comando         ir ao estado 52
+    Atribuicao      ir ao estado 53
+    Controle_Fluxo  ir ao estado 54
+    Read            ir ao estado 55
+    Print           ir ao estado 56
+    Return          ir ao estado 57
+
+
+Estado 39
+
+   20 Funcao: '(' Tipo ')' TK_IDENTIFIER '(' ')' Bloco_Comandos .
+
+    $padrão  reduzir usando a regra 20 (Funcao)
+
+
+Estado 40
+
+   21 Funcao: '(' Tipo ')' TK_IDENTIFIER '(' Lista_Parametros ')' . Bloco_Comandos
+
+    '{'  deslocar, e ir ao estado 38
+
+    Bloco_Comandos  ir ao estado 58
+
+
+Estado 41
+
+   66 Lista_Parametros: Parametro ',' . Lista_Parametros
+
+    TK_IDENTIFIER  deslocar, e ir ao estado 31
+
+    Lista_Parametros  ir ao estado 59
+    Parametro         ir ao estado 34
+
+
+Estado 42
+
+   19 Lista_Literais: Literal Lista_Literais .
+
+    $padrão  reduzir usando a regra 19 (Lista_Literais)
+
+
+Estado 43
+
+   67 Parametro: TK_IDENTIFIER ':' Tipo .
+
+    $padrão  reduzir usando a regra 67 (Parametro)
+
+
+Estado 44
+
+   55 Controle_Fluxo: KW_IF . '(' Expressao ')' KW_THEN Comando
+   56               | KW_IF . '(' Expressao ')' KW_THEN Comando KW_ELSE Comando
+
+    '('  deslocar, e ir ao estado 60
+
+
+Estado 45
+
+   57 Controle_Fluxo: KW_WHILE . '(' Expressao ')' Comando
+
+    '('  deslocar, e ir ao estado 61
+
+
+Estado 46
+
+   58 Read: KW_READ . '>' TK_IDENTIFIER
+
+    '>'  deslocar, e ir ao estado 62
+
+
+Estado 47
+
+   59 Print: KW_PRINT . Lista_Elementos
+
+    TK_IDENTIFIER  deslocar, e ir ao estado 63
+    LIT_INTEGER    deslocar, e ir ao estado 24
+    LIT_CHAR       deslocar, e ir ao estado 25
+    LIT_STRING     deslocar, e ir ao estado 64
+    LIT_REAL       deslocar, e ir ao estado 26
+    '('            deslocar, e ir ao estado 65
+
+    Literal          ir ao estado 66
+    Expressao        ir ao estado 67
+    Lista_Elementos  ir ao estado 68
+    Elemento         ir ao estado 69
+
+
+Estado 48
+
+   64 Return: KW_RETURN . Expressao
+
+    TK_IDENTIFIER  deslocar, e ir ao estado 63
+    LIT_INTEGER    deslocar, e ir ao estado 24
+    LIT_CHAR       deslocar, e ir ao estado 25
+    LIT_REAL       deslocar, e ir ao estado 26
+    '('            deslocar, e ir ao estado 65
+
+    Literal    ir ao estado 66
+    Expressao  ir ao estado 70
+
+
+Estado 49
+
+   32 Atribuicao: TK_IDENTIFIER . '=' Expressao
+   33           | TK_IDENTIFIER . '[' Expressao ']' '=' Expressao
+
+    '='  deslocar, e ir ao estado 71
+    '['  deslocar, e ir ao estado 72
+
+
+Estado 50
+
+   30 Comando: Bloco_Comandos .
+
+    $padrão  reduzir usando a regra 30 (Comando)
+
+
+Estado 51
+
+   22 Bloco_Comandos: '{' Lista_Comandos . '}'
+
+    '}'  deslocar, e ir ao estado 73
+
+
+Estado 52
+
+   23 Lista_Comandos: Comando .
+   24               | Comando . ';' Lista_Comandos
+
+    ';'  deslocar, e ir ao estado 74
+
+    $padrão  reduzir usando a regra 23 (Lista_Comandos)
+
+
+Estado 53
+
+   25 Comando: Atribuicao .
+
+    $padrão  reduzir usando a regra 25 (Comando)
+
+
+Estado 54
+
+   26 Comando: Controle_Fluxo .
+
+    $padrão  reduzir usando a regra 26 (Comando)
+
+
+Estado 55
+
+   27 Comando: Read .
+
+    $padrão  reduzir usando a regra 27 (Comando)
+
+
+Estado 56
+
+   28 Comando: Print .
+
+    $padrão  reduzir usando a regra 28 (Comando)
+
+
+Estado 57
+
+   29 Comando: Return .
+
+    $padrão  reduzir usando a regra 29 (Comando)
+
+
+Estado 58
+
+   21 Funcao: '(' Tipo ')' TK_IDENTIFIER '(' Lista_Parametros ')' Bloco_Comandos .
+
+    $padrão  reduzir usando a regra 21 (Funcao)
+
+
+Estado 59
+
+   66 Lista_Parametros: Parametro ',' Lista_Parametros .
+
+    $padrão  reduzir usando a regra 66 (Lista_Parametros)
+
+
+Estado 60
+
+   55 Controle_Fluxo: KW_IF '(' . Expressao ')' KW_THEN Comando
+   56               | KW_IF '(' . Expressao ')' KW_THEN Comando KW_ELSE Comando
+
+    TK_IDENTIFIER  deslocar, e ir ao estado 63
+    LIT_INTEGER    deslocar, e ir ao estado 24
+    LIT_CHAR       deslocar, e ir ao estado 25
+    LIT_REAL       deslocar, e ir ao estado 26
+    '('            deslocar, e ir ao estado 65
+
+    Literal    ir ao estado 66
+    Expressao  ir ao estado 75
+
+
+Estado 61
+
+   57 Controle_Fluxo: KW_WHILE '(' . Expressao ')' Comando
+
+    TK_IDENTIFIER  deslocar, e ir ao estado 63
+    LIT_INTEGER    deslocar, e ir ao estado 24
+    LIT_CHAR       deslocar, e ir ao estado 25
+    LIT_REAL       deslocar, e ir ao estado 26
+    '('            deslocar, e ir ao estado 65
+
+    Literal    ir ao estado 66
+    Expressao  ir ao estado 76
+
+
+Estado 62
+
+   58 Read: KW_READ '>' . TK_IDENTIFIER
+
+    TK_IDENTIFIER  deslocar, e ir ao estado 77
+
+
+Estado 63
+
+   34 Expressao: TK_IDENTIFIER .
+   35          | TK_IDENTIFIER . '[' Expressao ']'
+   51          | TK_IDENTIFIER . '(' ')'
+   52          | TK_IDENTIFIER . '(' Lista_Expressoes ')'
+
+    '['  deslocar, e ir ao estado 78
+    '('  deslocar, e ir ao estado 79
+
+    $padrão  reduzir usando a regra 34 (Expressao)
+
+
+Estado 64
+
+   62 Elemento: LIT_STRING .
+
+    $padrão  reduzir usando a regra 62 (Elemento)
+
+
+Estado 65
+
+   37 Expressao: '(' . Expressao ')'
+
+    TK_IDENTIFIER  deslocar, e ir ao estado 63
+    LIT_INTEGER    deslocar, e ir ao estado 24
+    LIT_CHAR       deslocar, e ir ao estado 25
+    LIT_REAL       deslocar, e ir ao estado 26
+    '('            deslocar, e ir ao estado 65
+
+    Literal    ir ao estado 66
+    Expressao  ir ao estado 80
+
+
+Estado 66
+
+   36 Expressao: Literal .
+
+    $padrão  reduzir usando a regra 36 (Expressao)
+
+
+Estado 67
+
+   38 Expressao: Expressao . '<' Expressao
+   39          | Expressao . '>' Expressao
+   40          | Expressao . '!' Expressao
+   41          | Expressao . '-' Expressao
+   42          | Expressao . '+' Expressao
+   43          | Expressao . '*' Expressao
+   44          | Expressao . '/' Expressao
+   45          | Expressao . OPERATOR_LE Expressao
+   46          | Expressao . OPERATOR_GE Expressao
+   47          | Expressao . OPERATOR_EQ Expressao
+   48          | Expressao . OPERATOR_NE Expressao
+   49          | Expressao . OPERATOR_AND Expressao
+   50          | Expressao . OPERATOR_OR Expressao
+   63 Elemento: Expressao .
+
+    OPERATOR_LE   deslocar, e ir ao estado 81
+    OPERATOR_GE   deslocar, e ir ao estado 82
+    OPERATOR_EQ   deslocar, e ir ao estado 83
+    OPERATOR_NE   deslocar, e ir ao estado 84
+    OPERATOR_AND  deslocar, e ir ao estado 85
+    OPERATOR_OR   deslocar, e ir ao estado 86
+    '<'           deslocar, e ir ao estado 87
+    '>'           deslocar, e ir ao estado 88
+    '!'           deslocar, e ir ao estado 89
+    '+'           deslocar, e ir ao estado 90
+    '-'           deslocar, e ir ao estado 91
+    '*'           deslocar, e ir ao estado 92
+    '/'           deslocar, e ir ao estado 93
+
+    $padrão  reduzir usando a regra 63 (Elemento)
+
+
+Estado 68
+
+   59 Print: KW_PRINT Lista_Elementos .
+
+    $padrão  reduzir usando a regra 59 (Print)
+
+
+Estado 69
+
+   60 Lista_Elementos: Elemento .
+   61                | Elemento . ',' Lista_Elementos
+
+    ','  deslocar, e ir ao estado 94
+
+    $padrão  reduzir usando a regra 60 (Lista_Elementos)
+
+
+Estado 70
+
+   38 Expressao: Expressao . '<' Expressao
+   39          | Expressao . '>' Expressao
+   40          | Expressao . '!' Expressao
+   41          | Expressao . '-' Expressao
+   42          | Expressao . '+' Expressao
+   43          | Expressao . '*' Expressao
+   44          | Expressao . '/' Expressao
+   45          | Expressao . OPERATOR_LE Expressao
+   46          | Expressao . OPERATOR_GE Expressao
+   47          | Expressao . OPERATOR_EQ Expressao
+   48          | Expressao . OPERATOR_NE Expressao
+   49          | Expressao . OPERATOR_AND Expressao
+   50          | Expressao . OPERATOR_OR Expressao
+   64 Return: KW_RETURN Expressao .
+
+    OPERATOR_LE   deslocar, e ir ao estado 81
+    OPERATOR_GE   deslocar, e ir ao estado 82
+    OPERATOR_EQ   deslocar, e ir ao estado 83
+    OPERATOR_NE   deslocar, e ir ao estado 84
+    OPERATOR_AND  deslocar, e ir ao estado 85
+    OPERATOR_OR   deslocar, e ir ao estado 86
+    '<'           deslocar, e ir ao estado 87
+    '>'           deslocar, e ir ao estado 88
+    '!'           deslocar, e ir ao estado 89
+    '+'           deslocar, e ir ao estado 90
+    '-'           deslocar, e ir ao estado 91
+    '*'           deslocar, e ir ao estado 92
+    '/'           deslocar, e ir ao estado 93
+
+    $padrão  reduzir usando a regra 64 (Return)
+
+
+Estado 71
+
+   32 Atribuicao: TK_IDENTIFIER '=' . Expressao
+
+    TK_IDENTIFIER  deslocar, e ir ao estado 63
+    LIT_INTEGER    deslocar, e ir ao estado 24
+    LIT_CHAR       deslocar, e ir ao estado 25
+    LIT_REAL       deslocar, e ir ao estado 26
+    '('            deslocar, e ir ao estado 65
+
+    Literal    ir ao estado 66
+    Expressao  ir ao estado 95
+
+
+Estado 72
+
+   33 Atribuicao: TK_IDENTIFIER '[' . Expressao ']' '=' Expressao
+
+    TK_IDENTIFIER  deslocar, e ir ao estado 63
+    LIT_INTEGER    deslocar, e ir ao estado 24
+    LIT_CHAR       deslocar, e ir ao estado 25
+    LIT_REAL       deslocar, e ir ao estado 26
+    '('            deslocar, e ir ao estado 65
+
+    Literal    ir ao estado 66
+    Expressao  ir ao estado 96
+
+
+Estado 73
+
+   22 Bloco_Comandos: '{' Lista_Comandos '}' .
+
+    $padrão  reduzir usando a regra 22 (Bloco_Comandos)
+
+
+Estado 74
+
+   24 Lista_Comandos: Comando ';' . Lista_Comandos
+
+    KW_IF          deslocar, e ir ao estado 44
+    KW_WHILE       deslocar, e ir ao estado 45
+    KW_READ        deslocar, e ir ao estado 46
+    KW_PRINT       deslocar, e ir ao estado 47
+    KW_RETURN      deslocar, e ir ao estado 48
+    TK_IDENTIFIER  deslocar, e ir ao estado 49
+    '{'            deslocar, e ir ao estado 38
+
+    $padrão  reduzir usando a regra 31 (Comando)
+
+    Bloco_Comandos  ir ao estado 50
+    Lista_Comandos  ir ao estado 97
+    Comando         ir ao estado 52
+    Atribuicao      ir ao estado 53
+    Controle_Fluxo  ir ao estado 54
+    Read            ir ao estado 55
+    Print           ir ao estado 56
+    Return          ir ao estado 57
+
+
+Estado 75
+
+   38 Expressao: Expressao . '<' Expressao
+   39          | Expressao . '>' Expressao
+   40          | Expressao . '!' Expressao
+   41          | Expressao . '-' Expressao
+   42          | Expressao . '+' Expressao
+   43          | Expressao . '*' Expressao
+   44          | Expressao . '/' Expressao
+   45          | Expressao . OPERATOR_LE Expressao
+   46          | Expressao . OPERATOR_GE Expressao
+   47          | Expressao . OPERATOR_EQ Expressao
+   48          | Expressao . OPERATOR_NE Expressao
+   49          | Expressao . OPERATOR_AND Expressao
+   50          | Expressao . OPERATOR_OR Expressao
+   55 Controle_Fluxo: KW_IF '(' Expressao . ')' KW_THEN Comando
+   56               | KW_IF '(' Expressao . ')' KW_THEN Comando KW_ELSE Comando
+
+    OPERATOR_LE   deslocar, e ir ao estado 81
+    OPERATOR_GE   deslocar, e ir ao estado 82
+    OPERATOR_EQ   deslocar, e ir ao estado 83
+    OPERATOR_NE   deslocar, e ir ao estado 84
+    OPERATOR_AND  deslocar, e ir ao estado 85
+    OPERATOR_OR   deslocar, e ir ao estado 86
+    '<'           deslocar, e ir ao estado 87
+    '>'           deslocar, e ir ao estado 88
+    '!'           deslocar, e ir ao estado 89
+    '+'           deslocar, e ir ao estado 90
+    '-'           deslocar, e ir ao estado 91
+    '*'           deslocar, e ir ao estado 92
+    '/'           deslocar, e ir ao estado 93
+    ')'           deslocar, e ir ao estado 98
+
+
+Estado 76
+
+   38 Expressao: Expressao . '<' Expressao
+   39          | Expressao . '>' Expressao
+   40          | Expressao . '!' Expressao
+   41          | Expressao . '-' Expressao
+   42          | Expressao . '+' Expressao
+   43          | Expressao . '*' Expressao
+   44          | Expressao . '/' Expressao
+   45          | Expressao . OPERATOR_LE Expressao
+   46          | Expressao . OPERATOR_GE Expressao
+   47          | Expressao . OPERATOR_EQ Expressao
+   48          | Expressao . OPERATOR_NE Expressao
+   49          | Expressao . OPERATOR_AND Expressao
+   50          | Expressao . OPERATOR_OR Expressao
+   57 Controle_Fluxo: KW_WHILE '(' Expressao . ')' Comando
+
+    OPERATOR_LE   deslocar, e ir ao estado 81
+    OPERATOR_GE   deslocar, e ir ao estado 82
+    OPERATOR_EQ   deslocar, e ir ao estado 83
+    OPERATOR_NE   deslocar, e ir ao estado 84
+    OPERATOR_AND  deslocar, e ir ao estado 85
+    OPERATOR_OR   deslocar, e ir ao estado 86
+    '<'           deslocar, e ir ao estado 87
+    '>'           deslocar, e ir ao estado 88
+    '!'           deslocar, e ir ao estado 89
+    '+'           deslocar, e ir ao estado 90
+    '-'           deslocar, e ir ao estado 91
+    '*'           deslocar, e ir ao estado 92
+    '/'           deslocar, e ir ao estado 93
+    ')'           deslocar, e ir ao estado 99
+
+
+Estado 77
+
+   58 Read: KW_READ '>' TK_IDENTIFIER .
+
+    $padrão  reduzir usando a regra 58 (Read)
+
+
+Estado 78
+
+   35 Expressao: TK_IDENTIFIER '[' . Expressao ']'
+
+    TK_IDENTIFIER  deslocar, e ir ao estado 63
+    LIT_INTEGER    deslocar, e ir ao estado 24
+    LIT_CHAR       deslocar, e ir ao estado 25
+    LIT_REAL       deslocar, e ir ao estado 26
+    '('            deslocar, e ir ao estado 65
+
+    Literal    ir ao estado 66
+    Expressao  ir ao estado 100
+
+
+Estado 79
+
+   51 Expressao: TK_IDENTIFIER '(' . ')'
+   52          | TK_IDENTIFIER '(' . Lista_Expressoes ')'
+
+    TK_IDENTIFIER  deslocar, e ir ao estado 63
+    LIT_INTEGER    deslocar, e ir ao estado 24
+    LIT_CHAR       deslocar, e ir ao estado 25
+    LIT_REAL       deslocar, e ir ao estado 26
+    '('            deslocar, e ir ao estado 65
+    ')'            deslocar, e ir ao estado 101
+
+    Literal           ir ao estado 66
+    Expressao         ir ao estado 102
+    Lista_Expressoes  ir ao estado 103
+
+
+Estado 80
+
+   37 Expressao: '(' Expressao . ')'
+   38          | Expressao . '<' Expressao
+   39          | Expressao . '>' Expressao
+   40          | Expressao . '!' Expressao
+   41          | Expressao . '-' Expressao
+   42          | Expressao . '+' Expressao
+   43          | Expressao . '*' Expressao
+   44          | Expressao . '/' Expressao
+   45          | Expressao . OPERATOR_LE Expressao
+   46          | Expressao . OPERATOR_GE Expressao
+   47          | Expressao . OPERATOR_EQ Expressao
+   48          | Expressao . OPERATOR_NE Expressao
+   49          | Expressao . OPERATOR_AND Expressao
+   50          | Expressao . OPERATOR_OR Expressao
+
+    OPERATOR_LE   deslocar, e ir ao estado 81
+    OPERATOR_GE   deslocar, e ir ao estado 82
+    OPERATOR_EQ   deslocar, e ir ao estado 83
+    OPERATOR_NE   deslocar, e ir ao estado 84
+    OPERATOR_AND  deslocar, e ir ao estado 85
+    OPERATOR_OR   deslocar, e ir ao estado 86
+    '<'           deslocar, e ir ao estado 87
+    '>'           deslocar, e ir ao estado 88
+    '!'           deslocar, e ir ao estado 89
+    '+'           deslocar, e ir ao estado 90
+    '-'           deslocar, e ir ao estado 91
+    '*'           deslocar, e ir ao estado 92
+    '/'           deslocar, e ir ao estado 93
+    ')'           deslocar, e ir ao estado 104
+
+
+Estado 81
+
+   45 Expressao: Expressao OPERATOR_LE . Expressao
+
+    TK_IDENTIFIER  deslocar, e ir ao estado 63
+    LIT_INTEGER    deslocar, e ir ao estado 24
+    LIT_CHAR       deslocar, e ir ao estado 25
+    LIT_REAL       deslocar, e ir ao estado 26
+    '('            deslocar, e ir ao estado 65
+
+    Literal    ir ao estado 66
+    Expressao  ir ao estado 105
+
+
+Estado 82
+
+   46 Expressao: Expressao OPERATOR_GE . Expressao
+
+    TK_IDENTIFIER  deslocar, e ir ao estado 63
+    LIT_INTEGER    deslocar, e ir ao estado 24
+    LIT_CHAR       deslocar, e ir ao estado 25
+    LIT_REAL       deslocar, e ir ao estado 26
+    '('            deslocar, e ir ao estado 65
+
+    Literal    ir ao estado 66
+    Expressao  ir ao estado 106
+
+
+Estado 83
+
+   47 Expressao: Expressao OPERATOR_EQ . Expressao
+
+    TK_IDENTIFIER  deslocar, e ir ao estado 63
+    LIT_INTEGER    deslocar, e ir ao estado 24
+    LIT_CHAR       deslocar, e ir ao estado 25
+    LIT_REAL       deslocar, e ir ao estado 26
+    '('            deslocar, e ir ao estado 65
+
+    Literal    ir ao estado 66
+    Expressao  ir ao estado 107
+
+
+Estado 84
+
+   48 Expressao: Expressao OPERATOR_NE . Expressao
+
+    TK_IDENTIFIER  deslocar, e ir ao estado 63
+    LIT_INTEGER    deslocar, e ir ao estado 24
+    LIT_CHAR       deslocar, e ir ao estado 25
+    LIT_REAL       deslocar, e ir ao estado 26
+    '('            deslocar, e ir ao estado 65
+
+    Literal    ir ao estado 66
+    Expressao  ir ao estado 108
+
+
+Estado 85
+
+   49 Expressao: Expressao OPERATOR_AND . Expressao
+
+    TK_IDENTIFIER  deslocar, e ir ao estado 63
+    LIT_INTEGER    deslocar, e ir ao estado 24
+    LIT_CHAR       deslocar, e ir ao estado 25
+    LIT_REAL       deslocar, e ir ao estado 26
+    '('            deslocar, e ir ao estado 65
+
+    Literal    ir ao estado 66
+    Expressao  ir ao estado 109
+
+
+Estado 86
+
+   50 Expressao: Expressao OPERATOR_OR . Expressao
+
+    TK_IDENTIFIER  deslocar, e ir ao estado 63
+    LIT_INTEGER    deslocar, e ir ao estado 24
+    LIT_CHAR       deslocar, e ir ao estado 25
+    LIT_REAL       deslocar, e ir ao estado 26
+    '('            deslocar, e ir ao estado 65
+
+    Literal    ir ao estado 66
+    Expressao  ir ao estado 110
+
+
+Estado 87
+
+   38 Expressao: Expressao '<' . Expressao
+
+    TK_IDENTIFIER  deslocar, e ir ao estado 63
+    LIT_INTEGER    deslocar, e ir ao estado 24
+    LIT_CHAR       deslocar, e ir ao estado 25
+    LIT_REAL       deslocar, e ir ao estado 26
+    '('            deslocar, e ir ao estado 65
+
+    Literal    ir ao estado 66
+    Expressao  ir ao estado 111
+
+
+Estado 88
+
+   39 Expressao: Expressao '>' . Expressao
+
+    TK_IDENTIFIER  deslocar, e ir ao estado 63
+    LIT_INTEGER    deslocar, e ir ao estado 24
+    LIT_CHAR       deslocar, e ir ao estado 25
+    LIT_REAL       deslocar, e ir ao estado 26
+    '('            deslocar, e ir ao estado 65
+
+    Literal    ir ao estado 66
+    Expressao  ir ao estado 112
+
+
+Estado 89
+
+   40 Expressao: Expressao '!' . Expressao
+
+    TK_IDENTIFIER  deslocar, e ir ao estado 63
+    LIT_INTEGER    deslocar, e ir ao estado 24
+    LIT_CHAR       deslocar, e ir ao estado 25
+    LIT_REAL       deslocar, e ir ao estado 26
+    '('            deslocar, e ir ao estado 65
+
+    Literal    ir ao estado 66
+    Expressao  ir ao estado 113
+
+
+Estado 90
+
+   42 Expressao: Expressao '+' . Expressao
+
+    TK_IDENTIFIER  deslocar, e ir ao estado 63
+    LIT_INTEGER    deslocar, e ir ao estado 24
+    LIT_CHAR       deslocar, e ir ao estado 25
+    LIT_REAL       deslocar, e ir ao estado 26
+    '('            deslocar, e ir ao estado 65
+
+    Literal    ir ao estado 66
+    Expressao  ir ao estado 114
+
+
+Estado 91
+
+   41 Expressao: Expressao '-' . Expressao
+
+    TK_IDENTIFIER  deslocar, e ir ao estado 63
+    LIT_INTEGER    deslocar, e ir ao estado 24
+    LIT_CHAR       deslocar, e ir ao estado 25
+    LIT_REAL       deslocar, e ir ao estado 26
+    '('            deslocar, e ir ao estado 65
+
+    Literal    ir ao estado 66
+    Expressao  ir ao estado 115
+
+
+Estado 92
+
+   43 Expressao: Expressao '*' . Expressao
+
+    TK_IDENTIFIER  deslocar, e ir ao estado 63
+    LIT_INTEGER    deslocar, e ir ao estado 24
+    LIT_CHAR       deslocar, e ir ao estado 25
+    LIT_REAL       deslocar, e ir ao estado 26
+    '('            deslocar, e ir ao estado 65
+
+    Literal    ir ao estado 66
+    Expressao  ir ao estado 116
+
+
+Estado 93
+
+   44 Expressao: Expressao '/' . Expressao
+
+    TK_IDENTIFIER  deslocar, e ir ao estado 63
+    LIT_INTEGER    deslocar, e ir ao estado 24
+    LIT_CHAR       deslocar, e ir ao estado 25
+    LIT_REAL       deslocar, e ir ao estado 26
+    '('            deslocar, e ir ao estado 65
+
+    Literal    ir ao estado 66
+    Expressao  ir ao estado 117
+
+
+Estado 94
+
+   61 Lista_Elementos: Elemento ',' . Lista_Elementos
+
+    TK_IDENTIFIER  deslocar, e ir ao estado 63
+    LIT_INTEGER    deslocar, e ir ao estado 24
+    LIT_CHAR       deslocar, e ir ao estado 25
+    LIT_STRING     deslocar, e ir ao estado 64
+    LIT_REAL       deslocar, e ir ao estado 26
+    '('            deslocar, e ir ao estado 65
+
+    Literal          ir ao estado 66
+    Expressao        ir ao estado 67
+    Lista_Elementos  ir ao estado 118
+    Elemento         ir ao estado 69
+
+
+Estado 95
+
+   32 Atribuicao: TK_IDENTIFIER '=' Expressao .
+   38 Expressao: Expressao . '<' Expressao
+   39          | Expressao . '>' Expressao
+   40          | Expressao . '!' Expressao
+   41          | Expressao . '-' Expressao
+   42          | Expressao . '+' Expressao
+   43          | Expressao . '*' Expressao
+   44          | Expressao . '/' Expressao
+   45          | Expressao . OPERATOR_LE Expressao
+   46          | Expressao . OPERATOR_GE Expressao
+   47          | Expressao . OPERATOR_EQ Expressao
+   48          | Expressao . OPERATOR_NE Expressao
+   49          | Expressao . OPERATOR_AND Expressao
+   50          | Expressao . OPERATOR_OR Expressao
+
+    OPERATOR_LE   deslocar, e ir ao estado 81
+    OPERATOR_GE   deslocar, e ir ao estado 82
+    OPERATOR_EQ   deslocar, e ir ao estado 83
+    OPERATOR_NE   deslocar, e ir ao estado 84
+    OPERATOR_AND  deslocar, e ir ao estado 85
+    OPERATOR_OR   deslocar, e ir ao estado 86
+    '<'           deslocar, e ir ao estado 87
+    '>'           deslocar, e ir ao estado 88
+    '!'           deslocar, e ir ao estado 89
+    '+'           deslocar, e ir ao estado 90
+    '-'           deslocar, e ir ao estado 91
+    '*'           deslocar, e ir ao estado 92
+    '/'           deslocar, e ir ao estado 93
+
+    $padrão  reduzir usando a regra 32 (Atribuicao)
+
+
+Estado 96
+
+   33 Atribuicao: TK_IDENTIFIER '[' Expressao . ']' '=' Expressao
+   38 Expressao: Expressao . '<' Expressao
+   39          | Expressao . '>' Expressao
+   40          | Expressao . '!' Expressao
+   41          | Expressao . '-' Expressao
+   42          | Expressao . '+' Expressao
+   43          | Expressao . '*' Expressao
+   44          | Expressao . '/' Expressao
+   45          | Expressao . OPERATOR_LE Expressao
+   46          | Expressao . OPERATOR_GE Expressao
+   47          | Expressao . OPERATOR_EQ Expressao
+   48          | Expressao . OPERATOR_NE Expressao
+   49          | Expressao . OPERATOR_AND Expressao
+   50          | Expressao . OPERATOR_OR Expressao
+
+    OPERATOR_LE   deslocar, e ir ao estado 81
+    OPERATOR_GE   deslocar, e ir ao estado 82
+    OPERATOR_EQ   deslocar, e ir ao estado 83
+    OPERATOR_NE   deslocar, e ir ao estado 84
+    OPERATOR_AND  deslocar, e ir ao estado 85
+    OPERATOR_OR   deslocar, e ir ao estado 86
+    '<'           deslocar, e ir ao estado 87
+    '>'           deslocar, e ir ao estado 88
+    '!'           deslocar, e ir ao estado 89
+    '+'           deslocar, e ir ao estado 90
+    '-'           deslocar, e ir ao estado 91
+    '*'           deslocar, e ir ao estado 92
+    '/'           deslocar, e ir ao estado 93
+    ']'           deslocar, e ir ao estado 119
+
+
+Estado 97
+
+   24 Lista_Comandos: Comando ';' Lista_Comandos .
+
+    $padrão  reduzir usando a regra 24 (Lista_Comandos)
+
+
+Estado 98
+
+   55 Controle_Fluxo: KW_IF '(' Expressao ')' . KW_THEN Comando
+   56               | KW_IF '(' Expressao ')' . KW_THEN Comando KW_ELSE Comando
+
+    KW_THEN  deslocar, e ir ao estado 120
+
+
+Estado 99
+
+   57 Controle_Fluxo: KW_WHILE '(' Expressao ')' . Comando
+
+    KW_IF          deslocar, e ir ao estado 44
+    KW_WHILE       deslocar, e ir ao estado 45
+    KW_READ        deslocar, e ir ao estado 46
+    KW_PRINT       deslocar, e ir ao estado 47
+    KW_RETURN      deslocar, e ir ao estado 48
+    TK_IDENTIFIER  deslocar, e ir ao estado 49
+    '{'            deslocar, e ir ao estado 38
+
+    $padrão  reduzir usando a regra 31 (Comando)
+
+    Bloco_Comandos  ir ao estado 50
+    Comando         ir ao estado 121
+    Atribuicao      ir ao estado 53
+    Controle_Fluxo  ir ao estado 54
+    Read            ir ao estado 55
+    Print           ir ao estado 56
+    Return          ir ao estado 57
+
+
+Estado 100
+
+   35 Expressao: TK_IDENTIFIER '[' Expressao . ']'
+   38          | Expressao . '<' Expressao
+   39          | Expressao . '>' Expressao
+   40          | Expressao . '!' Expressao
+   41          | Expressao . '-' Expressao
+   42          | Expressao . '+' Expressao
+   43          | Expressao . '*' Expressao
+   44          | Expressao . '/' Expressao
+   45          | Expressao . OPERATOR_LE Expressao
+   46          | Expressao . OPERATOR_GE Expressao
+   47          | Expressao . OPERATOR_EQ Expressao
+   48          | Expressao . OPERATOR_NE Expressao
+   49          | Expressao . OPERATOR_AND Expressao
+   50          | Expressao . OPERATOR_OR Expressao
+
+    OPERATOR_LE   deslocar, e ir ao estado 81
+    OPERATOR_GE   deslocar, e ir ao estado 82
+    OPERATOR_EQ   deslocar, e ir ao estado 83
+    OPERATOR_NE   deslocar, e ir ao estado 84
+    OPERATOR_AND  deslocar, e ir ao estado 85
+    OPERATOR_OR   deslocar, e ir ao estado 86
+    '<'           deslocar, e ir ao estado 87
+    '>'           deslocar, e ir ao estado 88
+    '!'           deslocar, e ir ao estado 89
+    '+'           deslocar, e ir ao estado 90
+    '-'           deslocar, e ir ao estado 91
+    '*'           deslocar, e ir ao estado 92
+    '/'           deslocar, e ir ao estado 93
+    ']'           deslocar, e ir ao estado 122
+
+
+Estado 101
+
+   51 Expressao: TK_IDENTIFIER '(' ')' .
+
+    $padrão  reduzir usando a regra 51 (Expressao)
+
+
+Estado 102
+
+   38 Expressao: Expressao . '<' Expressao
+   39          | Expressao . '>' Expressao
+   40          | Expressao . '!' Expressao
+   41          | Expressao . '-' Expressao
+   42          | Expressao . '+' Expressao
+   43          | Expressao . '*' Expressao
+   44          | Expressao . '/' Expressao
+   45          | Expressao . OPERATOR_LE Expressao
+   46          | Expressao . OPERATOR_GE Expressao
+   47          | Expressao . OPERATOR_EQ Expressao
+   48          | Expressao . OPERATOR_NE Expressao
+   49          | Expressao . OPERATOR_AND Expressao
+   50          | Expressao . OPERATOR_OR Expressao
+   53 Lista_Expressoes: Expressao .
+   54                 | Expressao . ',' Lista_Expressoes
+
+    OPERATOR_LE   deslocar, e ir ao estado 81
+    OPERATOR_GE   deslocar, e ir ao estado 82
+    OPERATOR_EQ   deslocar, e ir ao estado 83
+    OPERATOR_NE   deslocar, e ir ao estado 84
+    OPERATOR_AND  deslocar, e ir ao estado 85
+    OPERATOR_OR   deslocar, e ir ao estado 86
+    '<'           deslocar, e ir ao estado 87
+    '>'           deslocar, e ir ao estado 88
+    '!'           deslocar, e ir ao estado 89
+    '+'           deslocar, e ir ao estado 90
+    '-'           deslocar, e ir ao estado 91
+    '*'           deslocar, e ir ao estado 92
+    '/'           deslocar, e ir ao estado 93
+    ','           deslocar, e ir ao estado 123
+
+    $padrão  reduzir usando a regra 53 (Lista_Expressoes)
+
+
+Estado 103
+
+   52 Expressao: TK_IDENTIFIER '(' Lista_Expressoes . ')'
+
+    ')'  deslocar, e ir ao estado 124
+
+
+Estado 104
+
+   37 Expressao: '(' Expressao ')' .
+
+    $padrão  reduzir usando a regra 37 (Expressao)
+
+
+Estado 105
+
+   38 Expressao: Expressao . '<' Expressao
+   39          | Expressao . '>' Expressao
+   40          | Expressao . '!' Expressao
+   41          | Expressao . '-' Expressao
+   42          | Expressao . '+' Expressao
+   43          | Expressao . '*' Expressao
+   44          | Expressao . '/' Expressao
+   45          | Expressao . OPERATOR_LE Expressao
+   45          | Expressao OPERATOR_LE Expressao .
+   46          | Expressao . OPERATOR_GE Expressao
+   47          | Expressao . OPERATOR_EQ Expressao
+   48          | Expressao . OPERATOR_NE Expressao
+   49          | Expressao . OPERATOR_AND Expressao
+   50          | Expressao . OPERATOR_OR Expressao
+
+    OPERATOR_GE   deslocar, e ir ao estado 82
+    OPERATOR_EQ   deslocar, e ir ao estado 83
+    OPERATOR_NE   deslocar, e ir ao estado 84
+    OPERATOR_AND  deslocar, e ir ao estado 85
+    OPERATOR_OR   deslocar, e ir ao estado 86
+    '+'           deslocar, e ir ao estado 90
+    '-'           deslocar, e ir ao estado 91
+    '*'           deslocar, e ir ao estado 92
+    '/'           deslocar, e ir ao estado 93
+
+    $padrão  reduzir usando a regra 45 (Expressao)
+
+
+Estado 106
+
+   38 Expressao: Expressao . '<' Expressao
+   39          | Expressao . '>' Expressao
+   40          | Expressao . '!' Expressao
+   41          | Expressao . '-' Expressao
+   42          | Expressao . '+' Expressao
+   43          | Expressao . '*' Expressao
+   44          | Expressao . '/' Expressao
+   45          | Expressao . OPERATOR_LE Expressao
+   46          | Expressao . OPERATOR_GE Expressao
+   46          | Expressao OPERATOR_GE Expressao .
+   47          | Expressao . OPERATOR_EQ Expressao
+   48          | Expressao . OPERATOR_NE Expressao
+   49          | Expressao . OPERATOR_AND Expressao
+   50          | Expressao . OPERATOR_OR Expressao
+
+    OPERATOR_AND  deslocar, e ir ao estado 85
+    OPERATOR_OR   deslocar, e ir ao estado 86
+    '+'           deslocar, e ir ao estado 90
+    '-'           deslocar, e ir ao estado 91
+    '*'           deslocar, e ir ao estado 92
+    '/'           deslocar, e ir ao estado 93
+
+    $padrão  reduzir usando a regra 46 (Expressao)
+
+
+Estado 107
+
+   38 Expressao: Expressao . '<' Expressao
+   39          | Expressao . '>' Expressao
+   40          | Expressao . '!' Expressao
+   41          | Expressao . '-' Expressao
+   42          | Expressao . '+' Expressao
+   43          | Expressao . '*' Expressao
+   44          | Expressao . '/' Expressao
+   45          | Expressao . OPERATOR_LE Expressao
+   46          | Expressao . OPERATOR_GE Expressao
+   47          | Expressao . OPERATOR_EQ Expressao
+   47          | Expressao OPERATOR_EQ Expressao .
+   48          | Expressao . OPERATOR_NE Expressao
+   49          | Expressao . OPERATOR_AND Expressao
+   50          | Expressao . OPERATOR_OR Expressao
+
+    OPERATOR_GE   deslocar, e ir ao estado 82
+    OPERATOR_NE   deslocar, e ir ao estado 84
+    OPERATOR_AND  deslocar, e ir ao estado 85
+    OPERATOR_OR   deslocar, e ir ao estado 86
+    '+'           deslocar, e ir ao estado 90
+    '-'           deslocar, e ir ao estado 91
+    '*'           deslocar, e ir ao estado 92
+    '/'           deslocar, e ir ao estado 93
+
+    $padrão  reduzir usando a regra 47 (Expressao)
+
+
+Estado 108
+
+   38 Expressao: Expressao . '<' Expressao
+   39          | Expressao . '>' Expressao
+   40          | Expressao . '!' Expressao
+   41          | Expressao . '-' Expressao
+   42          | Expressao . '+' Expressao
+   43          | Expressao . '*' Expressao
+   44          | Expressao . '/' Expressao
+   45          | Expressao . OPERATOR_LE Expressao
+   46          | Expressao . OPERATOR_GE Expressao
+   47          | Expressao . OPERATOR_EQ Expressao
+   48          | Expressao . OPERATOR_NE Expressao
+   48          | Expressao OPERATOR_NE Expressao .
+   49          | Expressao . OPERATOR_AND Expressao
+   50          | Expressao . OPERATOR_OR Expressao
+
+    OPERATOR_GE   deslocar, e ir ao estado 82
+    OPERATOR_AND  deslocar, e ir ao estado 85
+    OPERATOR_OR   deslocar, e ir ao estado 86
+    '+'           deslocar, e ir ao estado 90
+    '-'           deslocar, e ir ao estado 91
+    '*'           deslocar, e ir ao estado 92
+    '/'           deslocar, e ir ao estado 93
+
+    $padrão  reduzir usando a regra 48 (Expressao)
+
+
+Estado 109
+
+   38 Expressao: Expressao . '<' Expressao
+   39          | Expressao . '>' Expressao
+   40          | Expressao . '!' Expressao
+   41          | Expressao . '-' Expressao
+   42          | Expressao . '+' Expressao
+   43          | Expressao . '*' Expressao
+   44          | Expressao . '/' Expressao
+   45          | Expressao . OPERATOR_LE Expressao
+   46          | Expressao . OPERATOR_GE Expressao
+   47          | Expressao . OPERATOR_EQ Expressao
+   48          | Expressao . OPERATOR_NE Expressao
+   49          | Expressao . OPERATOR_AND Expressao
+   49          | Expressao OPERATOR_AND Expressao .
+   50          | Expressao . OPERATOR_OR Expressao
+
+    OPERATOR_OR  deslocar, e ir ao estado 86
+    '+'          deslocar, e ir ao estado 90
+    '-'          deslocar, e ir ao estado 91
+    '*'          deslocar, e ir ao estado 92
+    '/'          deslocar, e ir ao estado 93
+
+    $padrão  reduzir usando a regra 49 (Expressao)
+
+
+Estado 110
+
+   38 Expressao: Expressao . '<' Expressao
+   39          | Expressao . '>' Expressao
+   40          | Expressao . '!' Expressao
+   41          | Expressao . '-' Expressao
+   42          | Expressao . '+' Expressao
+   43          | Expressao . '*' Expressao
+   44          | Expressao . '/' Expressao
+   45          | Expressao . OPERATOR_LE Expressao
+   46          | Expressao . OPERATOR_GE Expressao
+   47          | Expressao . OPERATOR_EQ Expressao
+   48          | Expressao . OPERATOR_NE Expressao
+   49          | Expressao . OPERATOR_AND Expressao
+   50          | Expressao . OPERATOR_OR Expressao
+   50          | Expressao OPERATOR_OR Expressao .
+
+    '+'  deslocar, e ir ao estado 90
+    '-'  deslocar, e ir ao estado 91
+    '*'  deslocar, e ir ao estado 92
+    '/'  deslocar, e ir ao estado 93
+
+    $padrão  reduzir usando a regra 50 (Expressao)
+
+
+Estado 111
+
+   38 Expressao: Expressao . '<' Expressao
+   38          | Expressao '<' Expressao .
+   39          | Expressao . '>' Expressao
+   40          | Expressao . '!' Expressao
+   41          | Expressao . '-' Expressao
+   42          | Expressao . '+' Expressao
+   43          | Expressao . '*' Expressao
+   44          | Expressao . '/' Expressao
+   45          | Expressao . OPERATOR_LE Expressao
+   46          | Expressao . OPERATOR_GE Expressao
+   47          | Expressao . OPERATOR_EQ Expressao
+   48          | Expressao . OPERATOR_NE Expressao
+   49          | Expressao . OPERATOR_AND Expressao
+   50          | Expressao . OPERATOR_OR Expressao
+
+    OPERATOR_LE   deslocar, e ir ao estado 81
+    OPERATOR_GE   deslocar, e ir ao estado 82
+    OPERATOR_EQ   deslocar, e ir ao estado 83
+    OPERATOR_NE   deslocar, e ir ao estado 84
+    OPERATOR_AND  deslocar, e ir ao estado 85
+    OPERATOR_OR   deslocar, e ir ao estado 86
+    '+'           deslocar, e ir ao estado 90
+    '-'           deslocar, e ir ao estado 91
+    '*'           deslocar, e ir ao estado 92
+    '/'           deslocar, e ir ao estado 93
+
+    $padrão  reduzir usando a regra 38 (Expressao)
+
+
+Estado 112
+
+   38 Expressao: Expressao . '<' Expressao
+   39          | Expressao . '>' Expressao
+   39          | Expressao '>' Expressao .
+   40          | Expressao . '!' Expressao
+   41          | Expressao . '-' Expressao
+   42          | Expressao . '+' Expressao
+   43          | Expressao . '*' Expressao
+   44          | Expressao . '/' Expressao
+   45          | Expressao . OPERATOR_LE Expressao
+   46          | Expressao . OPERATOR_GE Expressao
+   47          | Expressao . OPERATOR_EQ Expressao
+   48          | Expressao . OPERATOR_NE Expressao
+   49          | Expressao . OPERATOR_AND Expressao
+   50          | Expressao . OPERATOR_OR Expressao
+
+    OPERATOR_LE   deslocar, e ir ao estado 81
+    OPERATOR_GE   deslocar, e ir ao estado 82
+    OPERATOR_EQ   deslocar, e ir ao estado 83
+    OPERATOR_NE   deslocar, e ir ao estado 84
+    OPERATOR_AND  deslocar, e ir ao estado 85
+    OPERATOR_OR   deslocar, e ir ao estado 86
+    '+'           deslocar, e ir ao estado 90
+    '-'           deslocar, e ir ao estado 91
+    '*'           deslocar, e ir ao estado 92
+    '/'           deslocar, e ir ao estado 93
+
+    $padrão  reduzir usando a regra 39 (Expressao)
+
+
+Estado 113
+
+   38 Expressao: Expressao . '<' Expressao
+   39          | Expressao . '>' Expressao
+   40          | Expressao . '!' Expressao
+   40          | Expressao '!' Expressao .
+   41          | Expressao . '-' Expressao
+   42          | Expressao . '+' Expressao
+   43          | Expressao . '*' Expressao
+   44          | Expressao . '/' Expressao
+   45          | Expressao . OPERATOR_LE Expressao
+   46          | Expressao . OPERATOR_GE Expressao
+   47          | Expressao . OPERATOR_EQ Expressao
+   48          | Expressao . OPERATOR_NE Expressao
+   49          | Expressao . OPERATOR_AND Expressao
+   50          | Expressao . OPERATOR_OR Expressao
+
+    OPERATOR_LE   deslocar, e ir ao estado 81
+    OPERATOR_GE   deslocar, e ir ao estado 82
+    OPERATOR_EQ   deslocar, e ir ao estado 83
+    OPERATOR_NE   deslocar, e ir ao estado 84
+    OPERATOR_AND  deslocar, e ir ao estado 85
+    OPERATOR_OR   deslocar, e ir ao estado 86
+    '+'           deslocar, e ir ao estado 90
+    '-'           deslocar, e ir ao estado 91
+    '*'           deslocar, e ir ao estado 92
+    '/'           deslocar, e ir ao estado 93
+
+    $padrão  reduzir usando a regra 40 (Expressao)
+
+
+Estado 114
+
+   38 Expressao: Expressao . '<' Expressao
+   39          | Expressao . '>' Expressao
+   40          | Expressao . '!' Expressao
+   41          | Expressao . '-' Expressao
+   42          | Expressao . '+' Expressao
+   42          | Expressao '+' Expressao .
+   43          | Expressao . '*' Expressao
+   44          | Expressao . '/' Expressao
+   45          | Expressao . OPERATOR_LE Expressao
+   46          | Expressao . OPERATOR_GE Expressao
+   47          | Expressao . OPERATOR_EQ Expressao
+   48          | Expressao . OPERATOR_NE Expressao
+   49          | Expressao . OPERATOR_AND Expressao
+   50          | Expressao . OPERATOR_OR Expressao
+
+    '*'  deslocar, e ir ao estado 92
+    '/'  deslocar, e ir ao estado 93
+
+    $padrão  reduzir usando a regra 42 (Expressao)
+
+
+Estado 115
+
+   38 Expressao: Expressao . '<' Expressao
+   39          | Expressao . '>' Expressao
+   40          | Expressao . '!' Expressao
+   41          | Expressao . '-' Expressao
+   41          | Expressao '-' Expressao .
+   42          | Expressao . '+' Expressao
+   43          | Expressao . '*' Expressao
+   44          | Expressao . '/' Expressao
+   45          | Expressao . OPERATOR_LE Expressao
+   46          | Expressao . OPERATOR_GE Expressao
+   47          | Expressao . OPERATOR_EQ Expressao
+   48          | Expressao . OPERATOR_NE Expressao
+   49          | Expressao . OPERATOR_AND Expressao
+   50          | Expressao . OPERATOR_OR Expressao
+
+    '*'  deslocar, e ir ao estado 92
+    '/'  deslocar, e ir ao estado 93
+
+    $padrão  reduzir usando a regra 41 (Expressao)
+
+
+Estado 116
+
+   38 Expressao: Expressao . '<' Expressao
+   39          | Expressao . '>' Expressao
+   40          | Expressao . '!' Expressao
+   41          | Expressao . '-' Expressao
+   42          | Expressao . '+' Expressao
+   43          | Expressao . '*' Expressao
+   43          | Expressao '*' Expressao .
+   44          | Expressao . '/' Expressao
+   45          | Expressao . OPERATOR_LE Expressao
+   46          | Expressao . OPERATOR_GE Expressao
+   47          | Expressao . OPERATOR_EQ Expressao
+   48          | Expressao . OPERATOR_NE Expressao
+   49          | Expressao . OPERATOR_AND Expressao
+   50          | Expressao . OPERATOR_OR Expressao
+
+    $padrão  reduzir usando a regra 43 (Expressao)
+
+
+Estado 117
+
+   38 Expressao: Expressao . '<' Expressao
+   39          | Expressao . '>' Expressao
+   40          | Expressao . '!' Expressao
+   41          | Expressao . '-' Expressao
+   42          | Expressao . '+' Expressao
+   43          | Expressao . '*' Expressao
+   44          | Expressao . '/' Expressao
+   44          | Expressao '/' Expressao .
+   45          | Expressao . OPERATOR_LE Expressao
+   46          | Expressao . OPERATOR_GE Expressao
+   47          | Expressao . OPERATOR_EQ Expressao
+   48          | Expressao . OPERATOR_NE Expressao
+   49          | Expressao . OPERATOR_AND Expressao
+   50          | Expressao . OPERATOR_OR Expressao
+
+    $padrão  reduzir usando a regra 44 (Expressao)
+
+
+Estado 118
+
+   61 Lista_Elementos: Elemento ',' Lista_Elementos .
+
+    $padrão  reduzir usando a regra 61 (Lista_Elementos)
+
+
+Estado 119
+
+   33 Atribuicao: TK_IDENTIFIER '[' Expressao ']' . '=' Expressao
+
+    '='  deslocar, e ir ao estado 125
+
+
+Estado 120
+
+   55 Controle_Fluxo: KW_IF '(' Expressao ')' KW_THEN . Comando
+   56               | KW_IF '(' Expressao ')' KW_THEN . Comando KW_ELSE Comando
+
+    KW_IF          deslocar, e ir ao estado 44
+    KW_WHILE       deslocar, e ir ao estado 45
+    KW_READ        deslocar, e ir ao estado 46
+    KW_PRINT       deslocar, e ir ao estado 47
+    KW_RETURN      deslocar, e ir ao estado 48
+    TK_IDENTIFIER  deslocar, e ir ao estado 49
+    '{'            deslocar, e ir ao estado 38
+
+    $padrão  reduzir usando a regra 31 (Comando)
+
+    Bloco_Comandos  ir ao estado 50
+    Comando         ir ao estado 126
+    Atribuicao      ir ao estado 53
+    Controle_Fluxo  ir ao estado 54
+    Read            ir ao estado 55
+    Print           ir ao estado 56
+    Return          ir ao estado 57
+
+
+Estado 121
+
+   57 Controle_Fluxo: KW_WHILE '(' Expressao ')' Comando .
+
+    $padrão  reduzir usando a regra 57 (Controle_Fluxo)
+
+
+Estado 122
+
+   35 Expressao: TK_IDENTIFIER '[' Expressao ']' .
+
+    $padrão  reduzir usando a regra 35 (Expressao)
+
+
+Estado 123
+
+   54 Lista_Expressoes: Expressao ',' . Lista_Expressoes
+
+    TK_IDENTIFIER  deslocar, e ir ao estado 63
+    LIT_INTEGER    deslocar, e ir ao estado 24
+    LIT_CHAR       deslocar, e ir ao estado 25
+    LIT_REAL       deslocar, e ir ao estado 26
+    '('            deslocar, e ir ao estado 65
+
+    Literal           ir ao estado 66
+    Expressao         ir ao estado 102
+    Lista_Expressoes  ir ao estado 127
+
+
+Estado 124
+
+   52 Expressao: TK_IDENTIFIER '(' Lista_Expressoes ')' .
+
+    $padrão  reduzir usando a regra 52 (Expressao)
+
+
+Estado 125
+
+   33 Atribuicao: TK_IDENTIFIER '[' Expressao ']' '=' . Expressao
+
+    TK_IDENTIFIER  deslocar, e ir ao estado 63
+    LIT_INTEGER    deslocar, e ir ao estado 24
+    LIT_CHAR       deslocar, e ir ao estado 25
+    LIT_REAL       deslocar, e ir ao estado 26
+    '('            deslocar, e ir ao estado 65
+
+    Literal    ir ao estado 66
+    Expressao  ir ao estado 128
+
+
+Estado 126
+
+   55 Controle_Fluxo: KW_IF '(' Expressao ')' KW_THEN Comando .
+   56               | KW_IF '(' Expressao ')' KW_THEN Comando . KW_ELSE Comando
+
+    KW_ELSE  deslocar, e ir ao estado 129
+
+    KW_ELSE   [reduzir usando a regra 55 (Controle_Fluxo)]
+    $padrão  reduzir usando a regra 55 (Controle_Fluxo)
+
+
+Estado 127
+
+   54 Lista_Expressoes: Expressao ',' Lista_Expressoes .
+
+    $padrão  reduzir usando a regra 54 (Lista_Expressoes)
+
+
+Estado 128
+
+   33 Atribuicao: TK_IDENTIFIER '[' Expressao ']' '=' Expressao .
+   38 Expressao: Expressao . '<' Expressao
+   39          | Expressao . '>' Expressao
+   40          | Expressao . '!' Expressao
+   41          | Expressao . '-' Expressao
+   42          | Expressao . '+' Expressao
+   43          | Expressao . '*' Expressao
+   44          | Expressao . '/' Expressao
+   45          | Expressao . OPERATOR_LE Expressao
+   46          | Expressao . OPERATOR_GE Expressao
+   47          | Expressao . OPERATOR_EQ Expressao
+   48          | Expressao . OPERATOR_NE Expressao
+   49          | Expressao . OPERATOR_AND Expressao
+   50          | Expressao . OPERATOR_OR Expressao
+
+    OPERATOR_LE   deslocar, e ir ao estado 81
+    OPERATOR_GE   deslocar, e ir ao estado 82
+    OPERATOR_EQ   deslocar, e ir ao estado 83
+    OPERATOR_NE   deslocar, e ir ao estado 84
+    OPERATOR_AND  deslocar, e ir ao estado 85
+    OPERATOR_OR   deslocar, e ir ao estado 86
+    '<'           deslocar, e ir ao estado 87
+    '>'           deslocar, e ir ao estado 88
+    '!'           deslocar, e ir ao estado 89
+    '+'           deslocar, e ir ao estado 90
+    '-'           deslocar, e ir ao estado 91
+    '*'           deslocar, e ir ao estado 92
+    '/'           deslocar, e ir ao estado 93
+
+    $padrão  reduzir usando a regra 33 (Atribuicao)
+
+
+Estado 129
+
+   56 Controle_Fluxo: KW_IF '(' Expressao ')' KW_THEN Comando KW_ELSE . Comando
+
+    KW_IF          deslocar, e ir ao estado 44
+    KW_WHILE       deslocar, e ir ao estado 45
+    KW_READ        deslocar, e ir ao estado 46
+    KW_PRINT       deslocar, e ir ao estado 47
+    KW_RETURN      deslocar, e ir ao estado 48
+    TK_IDENTIFIER  deslocar, e ir ao estado 49
+    '{'            deslocar, e ir ao estado 38
+
+    $padrão  reduzir usando a regra 31 (Comando)
+
+    Bloco_Comandos  ir ao estado 50
+    Comando         ir ao estado 130
+    Atribuicao      ir ao estado 53
+    Controle_Fluxo  ir ao estado 54
+    Read            ir ao estado 55
+    Print           ir ao estado 56
+    Return          ir ao estado 57
+
+
+Estado 130
+
+   56 Controle_Fluxo: KW_IF '(' Expressao ')' KW_THEN Comando KW_ELSE Comando .
+
+    $padrão  reduzir usando a regra 56 (Controle_Fluxo)
