@@ -83,7 +83,7 @@ Declaracao_global:
 
 Declaracao_local:
 		Funcao										{ $$ = $1; }				
-	| 	Variavel_Global								{ $$ = $1; }
+	| 	Variavel_Global	';'							{ $$ = $1; }
 	;	
 
 Variavel_Global:
@@ -129,7 +129,7 @@ Bloco_Comandos:
 	;
 	
 Lista_Comandos:
-		Comando
+		Comando 									{ $$ = astCreate(AST_COMANDO, 0, $1, 0, 0, 0); }	
 	|	Comando ';' Lista_Comandos					{ $$ = astCreate(AST_LISTA_COMANDO, 0, $1, $3, 0, 0); }	
 	;
 	

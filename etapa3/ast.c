@@ -56,19 +56,19 @@ void astPrint(AST_NODE *node, FILE* output)
 
 			/* TIPOS */
 			case AST_FLOAT:
-				fprintf(output, "float ");
+				fprintf(output, "float");
 				break;
 			case AST_BYTE:
-				fprintf(output, "byte ");
+				fprintf(output, "byte");
 				break;
 			case AST_SHORT:
-				fprintf(output, "short ");
+				fprintf(output, "short");
 				break;
 			case AST_LONG:
-				fprintf(output, "long ");
+				fprintf(output, "long");
 				break;
 			case AST_DOUBLE:
-				fprintf(output, "double ");
+				fprintf(output, "double");
 				break;
 
 			/* GLOBAIS */
@@ -77,6 +77,7 @@ void astPrint(AST_NODE *node, FILE* output)
 					fprintf(output, "%s:", node->symbol->text);
 
 				astPrint (node->sons[0], output);
+				fprintf(output, "= ");
 				astPrint (node->sons[1], output);
 				fprintf(output, ";\n");
 				break;
@@ -116,7 +117,9 @@ void astPrint(AST_NODE *node, FILE* output)
 
 			/* FUNÇÔES */
 			case AST_FUNCAO:  /* type TK_IDENTIFIER '(' lista_argumentos ')' */
+				fprintf(output, "(");
 				astPrint (node->sons[0], output);
+				fprintf(output, ")");
 				if(node->symbol)
 					fprintf(output, "%s", node->symbol->text);
 				fprintf(output, "(");
@@ -125,9 +128,9 @@ void astPrint(AST_NODE *node, FILE* output)
 				fprintf(output, ")\n");
 				astPrint (node->sons[2], output);
 
-				fprintf(output, ";\n");
+				//fprintf(output, ";\n");
 				break;
-			case AST_LISTA_PARAMETROS: 
+			case AST_LISTA_PARAMETROS:
 				astPrint (node->sons[0], output);
 				if (node->sons[1])
 				{
@@ -137,9 +140,10 @@ void astPrint(AST_NODE *node, FILE* output)
 
 				break;
 			case AST_PARAMETRO: 
-				astPrint (node->sons[0], output);
 				if(node->symbol)
 					fprintf(output, "%s", node->symbol->text);
+				fprintf(output, ":");
+				astPrint (node->sons[0], output);
 
 				break;
 
@@ -161,7 +165,7 @@ void astPrint(AST_NODE *node, FILE* output)
 
 			/* PRINT, RETURN READ, ETC */
 			case AST_READ:
-				fprintf (output, "read ");
+				fprintf (output, "read >");
 				if(node->symbol)
 					fprintf(output, "%s", node->symbol->text);
 				break;
@@ -173,7 +177,7 @@ void astPrint(AST_NODE *node, FILE* output)
 				astPrint(node->sons[0], output);
 				if(node->sons[1])
 				{
-					fprintf(output, " ");
+					fprintf(output, ",");
 					astPrint(node->sons[1], output);
 				}
 				break;
@@ -319,8 +323,9 @@ void astPrint(AST_NODE *node, FILE* output)
 			case AST_ATRIBUICAO_VETOR:
 				if(node->symbol)
 					fprintf(output, "%s", node->symbol->text);
-				fprintf (output, "#");
+				fprintf (output, "[");
 				astPrint (node->sons[0], output);
+				fprintf (output, "]");
 				fprintf (output, " = ");
 				astPrint (node->sons[1], output);
 				break;
