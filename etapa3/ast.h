@@ -28,6 +28,7 @@
 #define AST_SHORT 12
 #define AST_LONG 13
 #define AST_DOUBLE 14
+#define AST_INT	15
 
 /* GLOBAIS */
 #define VARIAVEL 21
