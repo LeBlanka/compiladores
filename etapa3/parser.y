@@ -66,8 +66,8 @@
 
 %%	
 
-raiz:	
-		Declaracao_global 							{ raiz = $1; }
+root:	
+		Declaracao_global 							{ root = $1; }
 		;
 
 Declaracao_global:
