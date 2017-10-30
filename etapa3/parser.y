@@ -64,6 +64,12 @@
 %type<ast> Expressao Lista_Expressoes Controle_Fluxo Read Print Lista_Elementos Elemento
 %type<ast> Return Lista_Parametros Parametro
 
+%union
+{
+	HASH_NODE *symbol;
+	AST_NODE *ast;
+}
+
 %%	
 
 root:	
@@ -71,8 +77,8 @@ root:
 		;
 
 Declaracao_global:
-			Declaracao_local						{ $$ = astCreate(AST_PROGRAM, 0, $1, 0, 0, 0); }
-		|	Declaracao_global Declaracao_local		{ $$ = astCreate(AST_PROGRAM, 0, $1, $2, 0, 0); }
+			Declaracao_local						{ $$ = astCreate(AST_DEC_GLOBAL, 0, $1, 0, 0, 0); }
+		|	Declaracao_global Declaracao_local		{ $$ = astCreate(AST_DEC_GLOBAL, 0, $1, $2, 0, 0); }
 		;
 
 Declaracao_local:
@@ -86,7 +92,7 @@ Variavel_Global:
 	;	
 	
 Variavel:
-		TK_IDENTIFIER ':' Tipo '=' Literal 			{ $$ = astCreate(AST_VAR, $1, $3, $5, 0, 0); }
+		TK_IDENTIFIER ':' Tipo '=' Literal 			{ $$ = astCreate(AST_VARIAVEL, $1, $3, $5, 0, 0); }
 	;
 	
 Tipo:

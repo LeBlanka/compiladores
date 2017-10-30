@@ -30,7 +30,7 @@
 #define AST_DOUBLE 14
 
 /* GLOBAIS */
-#define VARIAVEL 21
+#define AST_VARIAVEL 20
 #define AST_VETOR_NAO_DECLARADO 21
 #define AST_VETOR_DECLARADO 22
 
@@ -91,14 +91,14 @@ typedef struct ast_node
 {
 	int type;
 	HASH_NODE *symbol;
-	struct ast_node* sons[MAX_SONS];
-} AST;
+	struct ast_node *sons[MAX_SONS];
+} AST_NODE;
 
-AST *root;
+AST_NODE *root;
 FILE* outputfile;
 
-AST* astCreate(int type, HASH_NODE *symbol, AST* son0, AST* son1, AST* son2, AST* son3);
-void astPrintNode(AST *node);
-void astPrint(AST *node, FILE *output);
+AST_NODE *astCreate(int type, HASH_NODE *symbol, AST_NODE *son0, AST_NODE *son1, AST_NODE *son2, AST_NODE *son3);
+void astPrintNode(AST_NODE *node);
+void astPrint(AST_NODE *node, FILE *output);
 
 #endif

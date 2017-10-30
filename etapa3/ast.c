@@ -14,11 +14,11 @@
 #include "hash.h"
 #include "ast.h"
 
-AST *astCreate(int type, HASH_NODE *symbol, AST* son0, AST* son1, AST* son2, AST* son3)
+AST_NODE *astCreate(int type, HASH_NODE *symbol, AST_NODE* son0, AST_NODE* son1, AST_NODE* son2, AST_NODE* son3)
 {
-	AST *newNode;
+	AST_NODE *newNode;
 
-	if (!(newNode = (AST*) calloc(1, sizeof(AST))))
+	if (!(newNode = (AST_NODE*) calloc(1, sizeof(AST_NODE))))
 	{
 		fprintf(stderr, "Erro no AST CREATE: sem memória disponível!\n");
 		exit(1);
@@ -34,7 +34,7 @@ AST *astCreate(int type, HASH_NODE *symbol, AST* son0, AST* son1, AST* son2, AST
 	return newNode;
 }
 
-void astPrint(AST *node, FILE* output)
+void astPrint(AST_NODE *node, FILE* output)
 {
 	if (node)
 	{
