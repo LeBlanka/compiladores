@@ -30,7 +30,6 @@
 #define AST_DOUBLE 14
 
 /* GLOBAIS */
-#define AST_VETOR 20
 #define AST_VETOR_NAO_DECLARADO 21
 #define AST_VETOR_DECLARADO 22
 
